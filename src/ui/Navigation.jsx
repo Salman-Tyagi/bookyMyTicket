@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import ModalLocation from './ModalLocation';
 import LocationSearch from './LocationSearch';
@@ -16,10 +16,6 @@ const Navigation = ({
 }) => {
   const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {
-    setShowLocationModal(true);
-  }, []);
-
   return (
     <div className='py-2'>
       <header className='flex justify-center items-center'>
@@ -33,10 +29,19 @@ const Navigation = ({
         </div>
 
         <button
-          className='text-sm flex gap-4 justify-center items-center mr-6'
+          className='text-sm mr-6'
           onClick={() => setShowLocationModal(true)}
         >
-          {city ? city : 'Select city'} <IoIosArrowDown color='#555' />
+          <span className='truncate w-16'>
+            {city ? (
+              <>
+                {city}
+                <IoIosArrowDown color='#555' />
+              </>
+            ) : (
+              'Select your city'
+            )}
+          </span>
         </button>
 
         <button
@@ -54,6 +59,7 @@ const Navigation = ({
       <main></main>
 
       {showModal && <Signin setShowModal={setShowModal} />}
+
       {showLocationModal && (
         <ModalLocation
           setShowLocationModal={setShowLocationModal}
