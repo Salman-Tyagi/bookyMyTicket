@@ -1,7 +1,12 @@
 import { useState } from 'react';
+import LoginWithEmail from './LoginWithEmail';
 
 const Signin = ({ setShowModal }) => {
   const [focusInput, setFocusInput] = useState(false);
+  const [showLoginEmail, setShowLoginEmail] = useState(false);
+
+  if (showLoginEmail)
+    return <LoginWithEmail setShowLoginEmail={setShowLoginEmail} />;
 
   return (
     <div className='flex justify-center items-center w-full h-full absolute top-0 bg-black/15'>
@@ -18,7 +23,10 @@ const Signin = ({ setShowModal }) => {
           Continue with Google
         </div>
 
-        <div className='py-3 text-sm text-gray-600 font-medium flex justify-center border border-gray-400 items-center rounded hover:bg-gray-100 hover:border-gray-100 mb-4 cursor-pointer'>
+        <div
+          className='py-3 text-sm text-gray-600 font-medium flex justify-center border border-gray-400 items-center rounded hover:bg-gray-100 hover:border-gray-100 mb-4 cursor-pointer'
+          onClick={() => setShowLoginEmail(true)}
+        >
           Continue with Email
         </div>
 
