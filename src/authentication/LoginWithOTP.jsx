@@ -1,23 +1,42 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { GoChevronLeft } from 'react-icons/go';
+
 import verifyEmail from '../services/verifyEmail';
 import getEmail from '../services/getEmail';
+import SpinnerMini from '../ui/SpinnerMini';
 
 const LoginWithOTP = ({ setShowLoginEmail }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty },
   } = useForm({
-    mode: 'onChange',
+    // mode: 'onChange',
   });
 
-  const submitHandler = obj => {
+  const submitHandler = async obj => {
+    setIsLoading(true);
+
     const email = getEmail();
     const payload = { ...obj, email };
 
-    const data = verifyEmail(payload);
-    if (data.successs === 'success') console.log(data);
+    const data = await verifyEmail(payload);
+    console.log(data);
+
+    if (data.status === 'success') {
+      toast.success('User logged in successfull', { id: 'loggedIn' });
+      localStorage.setItem('token', data.token);
+      setIsLoading(false);
+    }
+
+    if (data.status === 'fail') {
+      toast.error(data.message, { id: 'errorLoggedIn' });
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -61,6 +80,7 @@ const LoginWithOTP = ({ setShowLoginEmail }) => {
                 message: 'Only numbers allowed',
               },
             })}
+            disabled={isLoading}
           />
           {errors?.OTP?.message && (
             <p className='mt-1 text-sm text-red-500'>{errors.OTP.message}</p>
@@ -76,8 +96,9 @@ const LoginWithOTP = ({ setShowLoginEmail }) => {
               className={`w-full border rounded-md py-2 bg-gray-300 text-white font-medium ${
                 isDirty && !Object.keys(errors).length && 'bg-pink-600'
               }`}
+              disabled={isLoading}
             >
-              Continue
+              {isLoading ? <SpinnerMini /> : 'Continue'}
             </button>
           </div>
         </form>

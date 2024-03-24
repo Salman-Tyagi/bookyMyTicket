@@ -8,9 +8,9 @@ const verifyEmail = async payload => {
       payload
     );
 
-    console.log(res.data);
+    return res?.data && res?.data;
   } catch (err) {
-    console.log(err);
+    if (err?.response) return err?.response?.data;
   }
 };
 
