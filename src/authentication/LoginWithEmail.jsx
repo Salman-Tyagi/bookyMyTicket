@@ -1,13 +1,15 @@
-import { GoChevronLeft } from 'react-icons/go';
-import { useForm } from 'react-hook-form';
-
-import { singupLogin } from '../services/signupLogin';
-import toast from 'react-hot-toast';
-import LoginWithOTP from './LoginWithOTP';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { GoChevronLeft } from 'react-icons/go';
+
+import LoginWithOTP from './LoginWithOTP';
+import { singupLogin } from '../services/signupLogin';
+import SpinnerMini from '../ui/SpinnerMini';
 
 const SignWithEmail = ({ setShowLoginEmail }) => {
   const [showLoginWithOTP, setShowLoginWithOTP] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -19,6 +21,7 @@ const SignWithEmail = ({ setShowLoginEmail }) => {
   });
 
   const submitHandler = async email => {
+    setIsLoading(true);
     const data = await singupLogin(email);
 
     if (data.status === 'success') {
@@ -27,10 +30,14 @@ const SignWithEmail = ({ setShowLoginEmail }) => {
       localStorage.setItem('email', JSON.stringify(email));
 
       reset();
+      setIsLoading(false);
       setShowLoginWithOTP(true);
     }
 
-    if (data.status === 'fail') toast.error(data.message, { id: 'error' });
+    if (data.status === 'fail') {
+      toast.error(data.message, { id: 'error' });
+      setIsLoading(false);
+    }
   };
 
   if (showLoginWithOTP)
@@ -63,7 +70,7 @@ const SignWithEmail = ({ setShowLoginEmail }) => {
           </p>
 
           <div>
-            <label className='text-sm block text-gray-700 mb-1'>Email</label>
+            <label className='text-sm text-gray-700 mb-1'>Email</label>
 
             <input
               type='text'
@@ -93,8 +100,9 @@ const SignWithEmail = ({ setShowLoginEmail }) => {
             className={`mt-auto border rounded-md py-2 bg-gray-300 text-white font-medium ${
               isDirty && !Object.keys(errors).length && 'bg-pink-600'
             }`}
+            disabled={isLoading}
           >
-            Continue
+            {isLoading ? <SpinnerMini /> : 'Continue'}
           </button>
         </form>
       </div>

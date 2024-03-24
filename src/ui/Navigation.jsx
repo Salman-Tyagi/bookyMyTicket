@@ -29,26 +29,20 @@ const Navigation = ({
         </div>
 
         <button
-          className='text-sm mr-6'
+          className='text-sm mr-6 flex items-center justify-center'
           onClick={() => setShowLocationModal(true)}
         >
-          <span className='truncate w-16'>
-            {city ? (
-              <>
-                {city}
-                <IoIosArrowDown color='#555' />
-              </>
-            ) : (
-              'Select your city'
-            )}
+          <span className='truncate max-w-16'>
+            {city ? city : 'Select your city'}
           </span>
+          <IoIosArrowDown color='#555' className='ml-2' />
         </button>
 
         <button
-          className='text-xs bg-rose-500 py-1 px-3 text-white rounded mr-6'
+          className='text-xs bg-rose-500 py-1 px-3 text-white rounded mr-6 hover:bg-rose-600'
           onClick={() => setShowModal(true)}
         >
-          Sign in
+          Signin
         </button>
 
         <button>
