@@ -106,8 +106,10 @@ const Signin = ({ setShowModal }) => {
         ) : (
           <p className='text-xs text-gray-500 text-center'>
             I agree to the{' '}
-            <span className='underline'>Terms and Conditions</span> &{' '}
-            <span className='underline'>Privacy Policy</span>
+            <span className='underline cursor-pointer'>
+              Terms and Conditions
+            </span>{' '}
+            & <span className='underline cursor-pointer'>Privacy Policy</span>
           </p>
         )}
       </form>

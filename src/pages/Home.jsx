@@ -2,7 +2,8 @@ import { useState } from 'react';
 
 import Navigation from '../ui/Navigation';
 
-const Home = ({ city, setCity }) => {
+const Home = () => {
+  const [city, setCity] = useState(null);
   const [showLocationModal, setShowLocationModal] = useState(true);
 
   return (
