@@ -1,9 +1,19 @@
-import { useState } from 'react';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+
 import Home from './pages/Home';
+import Error from './ui/Error';
 
-const App = () => {
-  const [city, setCity] = useState(null);
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Home />,
+    children: [{ path: 'explorer', element: <Home /> }],
+  },
+  {
+    path: '*',
+    element: <Error />,
+  },
+]);
 
-  return <Home city={city} setCity={setCity} />;
-};
+const App = () => <RouterProvider router={router} />;
 export default App;
