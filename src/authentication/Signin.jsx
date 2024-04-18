@@ -72,7 +72,7 @@ const Signin = ({ setShowModal }) => {
               type='text'
               id='mobile'
               placeholder='Continue with mobile number'
-              className='text-sm text-gray-500 outline-none border border-t-0  border-r-0 border-l-0 border-gray-300 py-1 focus:border-red-500 hover:border-gray-400'
+              className='text-sm text-gray-500 outline-none border-b border-gray-300 py-1 focus:border-red-500 hover:border-gray-400'
               onClick={() => setFocusInput(true)}
               {...register('mobileNumber', {
                 required: 'Number required!',

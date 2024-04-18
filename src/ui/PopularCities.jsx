@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getAllCities } from '../services/getAllCities';
 
-const PopularCities = ({ city, setCity, setShowLocationModal }) => {
+const PopularCities = ({ setCity, setShowLocationModal }) => {
   const [cities, setCities] = useState([]);
 
   const getCities = async () => {
